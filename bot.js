@@ -20,6 +20,18 @@ client.on('message', message => {
 });
 
 
+client.on('message', message =>{
+  if(message.content.startsWith(prefix + 'add')) {
+    let args = message.content.split(" ").slice(1).join(" ");
+    if(!args) return message.channel.send('**Please type the emoji ID after the command!**')
+    if(args.length < "18" || args.length > "18" || isNaN(args)) return message.channel.send(`**This emoji Can't be Found :x:**`)
+    message.guild.createEmoji(`https://cdn.discordapp.com/emojis/${args}.png`, `${args}`).catch(mstry => {
+     return message.channel.send(`**This emoji Can't be Found :x:**`)
+    })
+    message.channel.send(`**Successfully Added The Emoji ✅**`)
+  }
+});
+
 
 client.on("ready", () => {
   client.reactionRoles = [];
@@ -92,6 +104,28 @@ client.on('messageReactionRemove', (reaction, user) => {
   if (!request) return;
   reaction.message.guild.members.get(user.id).removeRole(request.role);
 })
+
+
+
+﻿﻿client.on("message", message => {
+if(message.content.startsWith(prefix + "avatar")){
+if(message.author.bot || message.channel.type == "dm") return;
+var args = message.content.split(" ")[1];
+var avt = args || message.author.id;
+client.fetchUser(avt)
+.then((user) => {
+avt = user
+let avtEmbed = new Discord.RichEmbed()
+.setColor("#36393e")
+.setAuthor(`${avt.username}'s Avatar`, message.author.avatarURL)
+.setImage(avt.avatarURL)
+.setFooter(`PrimeBot.`, message.client.user.avatarURL);
+message.channel.send(avtEmbed);
+})
+.catch(() => message.channel.send(`Error`));
+} 
+}); 
+
 
 
 
