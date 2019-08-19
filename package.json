@@ -1,1 +1,16 @@
-"discord.js": "^11.5.1"
+{
+  "name": "untitled",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "google-palette": "^1.1.0"
+  }
+}
