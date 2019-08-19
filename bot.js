@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = ".";
 
-
+//مسح رسائل
 client.on('message', message => {  
     if (message.author.bot) return; 
     if (message.content.startsWith(prefix + 'clear')) { 
@@ -19,6 +19,8 @@ client.on('message', message => {
   }
 });
 
+
+//رول برياكشن
 
 client.on('message', message =>{
   if(message.content.startsWith(prefix + 'add')) {
@@ -106,6 +108,7 @@ client.on('messageReactionRemove', (reaction, user) => {
 })
 
 
+//افتار اي شخص بالعالم
 
 ﻿﻿client.on("message", message => {
 if(message.content.startsWith(prefix + "avatar")){
@@ -125,6 +128,41 @@ message.channel.send(avtEmbed);
 .catch(() => message.channel.send(`Error`));
 } 
 }); 
+
+
+//الوان
+
+const Discord = require('discord.js');
+const palette = require("google-palette");
+
+client.on("message", async (message) => {
+    if (message.author.bot) return;
+    if (message.content.indexOf(prefix) != 0) return;
+
+    const [command, ...args] = message.content.slice(prefix.length).split(/ +/g);
+    if (command == 'colors') {
+        if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("تنقصك صلاحيات ادمن لاستخدم هذا الامر")
+        order = args.shift();
+        if (command == 'generate') {
+            let size = args.shift() || 10;
+            if (size < 10 || size > 50) return message.channel.send('يمكن ادخال رقم ما بين العشرة والخمسين فقط');
+            let colors = palette('rainbow', size);
+            colors.map((color, idx) => {
+                setTimeout(() => {
+                    message.guild.createRole({ name: idx + 1, color, permissions: [] }).catch(console.error);
+                }, idx * 200)
+            });
+        }
+        else if (order == 'clear') {
+            let timer = 0;
+            message.guild.roles.filter(role => !isNaN(role.name)).map(role => {
+                setTimeout(() => {
+                    role.delete();
+                }, ++timer * 200);
+            })
+        }
+    }
+});
 
 
 
